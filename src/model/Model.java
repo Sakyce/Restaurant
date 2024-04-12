@@ -15,7 +15,6 @@ public class Model implements java.io.Serializable {
     public final ArrayList<Table> lestables = new ArrayList<>();
 
     public Model() {
-
     }
 
     public Optional<Plat> getPlatFromName(String name) {
