@@ -13,4 +13,9 @@ public class Plat implements Serializable {
         this.name = name;
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Plat{ " + name + " ("+ price + "$) }";
+    }
 }

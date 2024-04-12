@@ -14,8 +14,7 @@ public class Model implements java.io.Serializable {
     public final ArrayList<Commande> commandes = new ArrayList<>();
     public final ArrayList<Table> lestables = new ArrayList<>();
 
-    public Model() {
-    }
+    public Model() {}
 
     public Optional<Plat> getPlatFromName(String name) {
         for (Plat plat : plats) {
@@ -25,13 +24,13 @@ public class Model implements java.io.Serializable {
         }
         return Optional.empty();
     }
-    public Optional<Table> getTableFromName(String name) {
+    public Table getTableFromName(String name) {
         for (Table table : lestables) {
             if (table.name.equals(name)) {
-                return Optional.of(table);
+                return table;
             }
         }
-        return Optional.empty();
+        return null;
     }
 
     public void addPlat(String name, float price) {
@@ -40,10 +39,19 @@ public class Model implements java.io.Serializable {
             return;
         }
         plats.add(new Plat(name, price));
-
+    }
+    public void addTable(String name) {
+        if (getTableFromName(name) != null) {
+            System.out.println("Y a déjà une table ayant ce nom");
+            return;
+        }
+        lestables.add(new Table(name));
     }
     public void removePlat(String name) {
         getPlatFromName(name).ifPresent(plats::remove);
+    }
+    public void removeTable(String name) {
+        Optional.of(getTableFromName(name)).ifPresent(lestables::remove);
     }
 
     public void addCommande(Commande commande) {

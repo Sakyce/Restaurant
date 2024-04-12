@@ -1,13 +1,11 @@
 package view;
 
 import controller.Controller;
+import model.CommandState;
 import model.Commande;
 import model.Plat;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Optional;
 
 public class Serveur {
     private final Controller controller;
@@ -19,6 +17,8 @@ public class Serveur {
     private JPanel contentPane;
     private JTextField nTableTextField;
     private JSpinner nombrePlats;
+    private JList currentCommandesList;
+    private JButton confirmDeliveryButton;
     private Commande currentCommande = new Commande();
 
     public Serveur(Controller controller) {
@@ -31,15 +31,16 @@ public class Serveur {
             updateView();
         });
         envoyerCommandeButton.addActionListener(e -> {
-            System.out.println("SEND nUDES");
             currentCommande.table = controller.model.getTableFromName(nTableTextField.getText());
 
-            if (currentCommande.table.isEmpty()) {
+            if (currentCommande.table == null) {
                 JOptionPane.showMessageDialog(null, "Le numéro de la table n'est pas valide!");
                 return;
             }
+            currentCommande.state = CommandState.PREPARATION;
 
             this.controller.addCommande(currentCommande);
+            this.controller.saveModel();
             currentCommande = new Commande();
             updateView();
         });
@@ -63,6 +64,12 @@ public class Serveur {
         for (Plat plat : currentCommande.plats) {
             listModel2.addElement(plat.name);
         }
+
+        /*var listModel3 = new DefaultListModel<String>();
+        currentCommandeList.setModel(listModel3);
+        for (Commande commande : controller.getCommandesOfState(CommandState.PRET)) {
+            listModel3.addElement(commande.name);
+        }*/
 
         envoyerCommandeButton.setText("Envoyer commande ("+currentCommande.totalPrice+"$)");
     }

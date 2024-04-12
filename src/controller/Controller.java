@@ -1,10 +1,10 @@
 package controller;
 
-import model.Commande;
-import model.Model;
-import model.Plat;
+import model.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
     public Model model;
@@ -36,7 +36,23 @@ public class Controller {
         return model.plats;
     }
 
-    public void addCommande(Commande currentCommande) {
+    public ArrayList<Commande> addCommande(Commande currentCommande) {
+        model.commandes.add(currentCommande);
+        System.out.println(currentCommande);
+        return model.commandes;
+    }
 
+    public ArrayList<Table> addTable(String text) {
+        model.addTable(text);
+        return model.lestables;
+    }
+
+    public ArrayList<Table> removeTable(String selectedValue) {
+        model.removeTable(selectedValue);
+        return model.lestables;
+    }
+
+    public List<Commande> getCommandesOfState(CommandState state) {
+        return model.commandes.stream().filter(p -> p.state.equals(state)).collect(Collectors.toList());
     }
 }

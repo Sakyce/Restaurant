@@ -11,9 +11,20 @@ public class Commande implements Serializable {
 
     public final ArrayList<Plat> plats = new ArrayList<>();
     public float totalPrice = 0;
-    public Optional<Table> table = Optional.empty();
+    public Table table;
+    public CommandState state = CommandState.ATTENTE;
     public void addPlat(Plat plat) {
         plats.add(plat);
         totalPrice += plat.price;
+    }
+
+    @Override
+    public String toString() {
+        return "Commande{" +
+                "plats=" + plats +
+                ", totalPrice=" + totalPrice +
+                ", table=" + table +
+                ", state=" + state +
+                '}';
     }
 }
