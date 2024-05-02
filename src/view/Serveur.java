@@ -17,7 +17,7 @@ public class Serveur {
     private JPanel contentPane;
     private JTextField nTableTextField;
     private JSpinner nombrePlats;
-    private JList currentCommandesList;
+    private JList<String> currentCommandesList;
     private JButton confirmDeliveryButton;
     private Commande currentCommande = new Commande();
 
@@ -65,11 +65,11 @@ public class Serveur {
             listModel2.addElement(plat.name);
         }
 
-        /*var listModel3 = new DefaultListModel<String>();
-        currentCommandeList.setModel(listModel3);
+        var listModel3 = new DefaultListModel<String>();
+        currentCommandesList.setModel(listModel3);
         for (Commande commande : controller.getCommandesOfState(CommandState.PRET)) {
-            listModel3.addElement(commande.name);
-        }*/
+            listModel3.addElement("Commande pour la table "+ commande.table.name);
+        }
 
         envoyerCommandeButton.setText("Envoyer commande ("+currentCommande.totalPrice+"$)");
     }
